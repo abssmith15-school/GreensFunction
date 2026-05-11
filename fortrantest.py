@@ -54,7 +54,7 @@ nz = TL.shape[0]
 
 r = np.linspace(0,50,nr)      # km
 z = np.linspace(0,4000,nz)   # m
-
+R, Z = np.meshgrid(r, z)
 # ============================================================
 # PLOT
 # ============================================================
@@ -74,5 +74,42 @@ plt.ylabel('Depth (m)')
 plt.title('RAM Transmission Loss')
 
 plt.colorbar(label='TL')
+
+plt.show()
+
+plt.figure(figsize=(12,6))
+
+# Filled contours
+cont = plt.contourf(
+    R,
+    Z,
+    TL,
+    levels=10,
+    cmap='jet'
+)
+
+# Optional contour lines
+lines = plt.contour(
+    R,
+    Z,
+    TL,
+    levels=10,
+    colors='k',
+    linewidths=0.5
+)
+
+plt.clabel(lines, inline=True, fontsize=8)
+
+plt.gca().invert_yaxis()
+
+plt.xlabel('Range (km)')
+plt.ylabel('Depth (m)')
+
+plt.title('RAM Transmission Loss Contours')
+
+cbar = plt.colorbar(cont)
+cbar.set_label('TL (dB)')
+
+plt.tight_layout()
 
 plt.show()
